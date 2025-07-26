@@ -20,16 +20,16 @@
 	</licenses>
 
 	<organization>
-		<name>neusta software development GmbH</name>
-		<url>http://neusta-sd.de</url>
+		<name>Manfred.Wolff</name>
+		<url>http://mwolff.org</url>
 	</organization>
 
 	<developers>
 		<developer>
 			<name>Manfred Wolff</name>
-			<email>m.wolff@neusta.de</email>
-			<organization>neusta software development GmbH</organization>
-			<organizationUrl>http://www.neusta-se.de</organizationUrl>
+			<email>info@mwolff.org</email>
+			<organization>Manfred.Wolff</organization>
+			<organizationUrl>http://mwolff.org</organizationUrl>
 		</developer>
 		<developer>
 			<name>Michael Albrecht</name>
@@ -40,8 +40,8 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/simplecommand/command.git</url>
-		<developerConnection>mwolff</developerConnection>
+		<url>https://github.com/mannewolff/command.git</url>
+		<developerConnection>wolff@manfred-wolff.de</developerConnection>
 	</scm>
 
 	<properties>
