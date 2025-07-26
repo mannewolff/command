@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class ProcessCommandTest {
 
     @Test
-    public void executeAsProcessSimpleTest() throws Exception {
+    public void executeAsProcessSimpleTest() {
         final ProcessTestCommandStart<GenericParameterObject> processTestStartCommand = new ProcessTestCommandStart<>(
                 "Start");
         final GenericParameterObject context = new DefaultParameterObject();

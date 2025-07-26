@@ -126,7 +126,7 @@ public class DefaultCommandContainerTest {
      * inserted Command wins ... etc.
      */
     @Test
-    public void testAddCommandWithPriorityInCommandContainerAndExecute() throws Exception {
+    public void testAddCommandWithPriorityInCommandContainerAndExecute() {
         final CommandContainer<GenericParameterObject> commandContainer = createCommandInOrderWithPrioritySUCCESSes();
         context.put("resultString", "");
         commandContainer.executeCommand(context);

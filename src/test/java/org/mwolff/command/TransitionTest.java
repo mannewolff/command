@@ -37,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TransitionTest {
 
     @Test
-    public void transition() throws Exception {
+    public void transition() {
         final Transition transition = new DefaultTransition();
         transition.setReturnValue("OK");
         transition.setTarget("Next");

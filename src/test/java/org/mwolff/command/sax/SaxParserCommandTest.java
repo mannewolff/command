@@ -54,7 +54,7 @@ public class SaxParserCommandTest {
     }
 
     @Test
-    public void testSaxParserFailure() throws Exception {
+    public void testSaxParserFailure() {
         final SaxParameterObject context = new SaxParameterObject();
         final CommandTransition result = startParsing(context, "invalidXMLDocument.xml");
         assertThat(result, CoreMatchers.is(FAILURE));

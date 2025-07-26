@@ -31,7 +31,7 @@ package org.mwolff.command;
  *
  * @author Manfred Wolff */
 @SuppressWarnings("serial")
-public class CommandException extends Exception {
+public class CommandException extends RuntimeException {
 
     /** Constructs a new exception with null as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a

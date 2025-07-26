@@ -49,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class InjectionChainBuilderTest {
 
     @Test
-    public void testExecuteOnly() throws Exception {
+    public void testExecuteOnly() {
         final GenericParameterObject context = new DefaultParameterObject();
         context.put("key", "value");
         final InjectionChainBuilder<GenericParameterObject> builder = new InjectionChainBuilder<>();

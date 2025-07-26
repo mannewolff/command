@@ -40,7 +40,7 @@ import static org.mwolff.command.sax.GlobalCommandConstants.*;
 public class InputSourceReaderCommandTest {
 
     @Test
-    public void testInvalidFilenName() throws Exception {
+    public void testInvalidFilenName() {
         final SaxParameterObject context = new SaxParameterObject();
         final InputSourceReaderCommand inputSourceReaderCommand = new InputSourceReaderCommand();
         context.put(FILE_NAME, "invalidFile.xml");

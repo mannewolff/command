@@ -32,7 +32,7 @@ import org.mwolff.command.DefaultCommandContainer;
 import org.mwolff.command.interfaces.Command;
 import org.mwolff.command.interfaces.CommandTransition;
 import org.mwolff.command.interfaces.Transition;
-import org.mwolff.command.process.AbstractDefaultProcessCommand;
+import org.mwolff.command.interfaces.ProcessCommand;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -64,11 +64,11 @@ public class ActionListToCommandContainerCommand extends AbstractDefaultCommand<
                 return FAILURE;
             }
 
-            if (command instanceof AbstractDefaultProcessCommand<?>) {
-                ((AbstractDefaultProcessCommand<Object>) command).setProcessID(action.getId());
+            if (command instanceof ProcessCommand) {
+                ((ProcessCommand<Object>) command).setProcessID(action.getId());
                 final List<Transition> transitions = action.getTransitions();
                 for (final Transition transition : transitions) {
-                    ((AbstractDefaultProcessCommand<Object>) command).addTransition(transition);
+                    ((ProcessCommand<Object>) command).addTransition(transition);
                 }
             }
 

@@ -48,7 +48,7 @@ public class TestCommandTest {
     }
     
     @Test
-    public void testWritePattern() throws Exception {
+    public void testWritePattern() {
         // given
         TestCommand testCommand = new TestCommand("1-", null);
         

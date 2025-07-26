@@ -61,7 +61,7 @@ public class ExampleCommandTest {
      * /&gt; &lt;ref bean="secondCommand" /&gt; &lt;/list&gt; &lt;/property&gt;
      * &lt;/bean&gt; */
     @Test
-    public void testBuilderExample() throws Exception {
+    public void testBuilderExample() {
 
         final List<Command<GenericParameterObject>> commands = new ArrayList<>();
         commands.add(new TestCommand("1-", CommandTransition.NEXT));

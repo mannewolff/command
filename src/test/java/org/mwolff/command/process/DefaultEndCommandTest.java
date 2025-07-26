@@ -53,7 +53,7 @@ public class DefaultEndCommandTest {
    }
 
    @Test
-   public void testEndCommandInProcessChain() throws Exception {
+   public void testEndCommandInProcessChain() {
       final DefaultCommandContainer<GenericParameterObject> defaultCommandContainer = new DefaultCommandContainer<>();
       defaultEndCommand.setProcessID("END");
       final DefaultParameterObject context = new DefaultParameterObject();

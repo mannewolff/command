@@ -54,7 +54,7 @@ public class AbstractDefaultChainCommandTest {
     
     @Test
     @DisplayName("Default Behavior: Asserts that the chain results DONE if underlying executeCommand() results FAILURE.")
-    void executeAsChainNull() throws Exception {
+    void executeAsChainNull() {
         final TestClassFailure command = new TestClassFailure();
         final CommandTransition result = command.executeCommandAsChain(null);
         assertThat(result, is(CommandTransition.DONE));

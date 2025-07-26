@@ -33,7 +33,7 @@ import org.mwolff.command.interfaces.CommandTransition;
 public class CommandTransitionTest {
 
     @Test
-    public void testName() throws Exception {
+    public void testName() {
         CommandTransition.valueOf(CommandTransition.SUCCESS.toString());
         CommandTransition.valueOf(CommandTransition.FAILURE.toString());
         CommandTransition.valueOf(CommandTransition.DONE.toString());

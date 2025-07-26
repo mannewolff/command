@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 public class ProcessTestCommandEndTest {
 
     @Test
-    public void testEndCommand() throws Exception {
+    public void testEndCommand() {
         final XMLChainBuilder<Object> xmlChainBuilder = new XMLChainBuilder<>("/commandChainEnd.xml");
         final DefaultParameterObject context = new DefaultParameterObject();
         final String result = xmlChainBuilder.executeAsProcess("END", context);

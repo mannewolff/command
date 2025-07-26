@@ -39,7 +39,7 @@ public class CommandExceptionTest {
 
     @Test
     @DisplayName("Default construction of CommandException is possible.")
-    public void commandExceptionDefaultConstructorTest() throws Exception {
+    public void commandExceptionDefaultConstructorTest() {
         assertThat(new CommandException(), Matchers.notNullValue());
     }
 

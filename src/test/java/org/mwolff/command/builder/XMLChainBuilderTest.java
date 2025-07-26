@@ -42,7 +42,7 @@ import static org.mwolff.command.interfaces.CommandTransition.*;
 public class XMLChainBuilderTest {
 
     @Test
-    public void testUnUsedSetProcessID() throws Exception {
+    public void testUnUsedSetProcessID() {
         final XMLChainBuilder<Object> xmlChainBuilder = new XMLChainBuilder<>("commandChainProcess.xml");
 
         final Throwable exception = Assertions.assertThrows(UnsupportedOperationException.class, () -> {

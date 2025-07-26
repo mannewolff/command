@@ -61,7 +61,7 @@ public class CommandTest {
    }
 
    @Test
-   public void testInterfaceDefaultExecuteWithNoContext() throws Exception {
+   public void testInterfaceDefaultExecuteWithNoContext() {
 
       final Command<GenericParameterObject> command = new Command<GenericParameterObject>() {
 

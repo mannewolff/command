@@ -41,7 +41,7 @@ import static org.mwolff.command.interfaces.CommandTransition.SUCCESS;
 public class SimpleTestCommandTest {
 
     @Test
-    public void testExecuteCommand() throws Exception {
+    public void testExecuteCommand() {
         final GenericParameterObject context = new DefaultParameterObject();
         final Command<GenericParameterObject> command = new SimpleTestCommand<>();
         CommandTransition result = command.executeCommand(context);

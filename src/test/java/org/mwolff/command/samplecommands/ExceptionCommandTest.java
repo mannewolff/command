@@ -38,7 +38,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ExceptionCommandTest {
 
     @Test
-    public void testFailure() throws Exception {
+    public void testFailure() {
         final GenericParameterObject context = new DefaultParameterObject();
         final ExceptionCommand<GenericParameterObject> exceptionCommand = new ExceptionCommand<>();
         final CommandTransition transition = exceptionCommand.executeCommand(context);

@@ -40,7 +40,7 @@ public class ParameterObjectTest {
     private final GenericParameterObject context       = new DefaultParameterObject();
 
     @Test
-    public void testContextInterface() throws Exception {
+    public void testContextInterface() {
         assertNotNull(context);
     }
 
