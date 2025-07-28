@@ -51,6 +51,9 @@ public class SaxParserCommand extends AbstractDefaultCommand<SaxParameterObject>
             final InputSource inputSource = (InputSource) parameterObject.get(INPUT_SOURCE);
 
             SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+            parserFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            parserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            parserFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
             parserFactory.setNamespaceAware(true);
             final XMLReader xmlReader = parserFactory.newSAXParser().getXMLReader();
             xmlReader.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, ""); // Compliant
