@@ -73,15 +73,7 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
 
     @Override
     public CommandTransition executeCommandAsChain(T parameterObject) {
-
-        CommandTransition result = NEXT;
-        for (final Command<T> command : commandList.values()) {
-            result = ((ChainCommand<T>) command).executeCommandAsChain(parameterObject);
-            if ((result == DONE) || (result == FAILURE)) {
-                break;
-            }
-        }
-        return result;
+        return executeCommandsInLoop(parameterObject, true);
     }
 
     /**
@@ -131,16 +123,21 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
 
     @Override
     public CommandTransition executeCommand(T parameterObject) {
+        return executeCommandsInLoop(parameterObject, false);
+    }
 
+    private CommandTransition executeCommandsInLoop(T parameterObject, boolean isChainCommand) {
         CommandTransition transition = SUCCESS;
-
         for (final Command<T> command : commandList.values()) {
-            transition = command.executeCommand(parameterObject);
-            if (transition.equals(FAILURE)) {
+            if (isChainCommand) {
+                transition = ((ChainCommand<T>) command).executeCommandAsChain(parameterObject);
+            } else {
+                transition = command.executeCommand(parameterObject);
+            }
+            if (transition.equals(FAILURE) || (isChainCommand && transition.equals(DONE))) {
                 break;
             }
         }
-
         return transition;
     }
 }
