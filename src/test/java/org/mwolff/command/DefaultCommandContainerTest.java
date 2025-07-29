@@ -40,9 +40,22 @@ import org.mwolff.command.parameterobject.GenericParameterObject;
 import org.mwolff.command.process.DefaultEndCommand;
 import org.mwolff.command.samplecommands.*;
 import org.mwolff.command.testcommand.TestCommand;
-import org.springframework.test.util.ReflectionTestUtils;
-
+import java.lang.reflect.Field;
 import java.util.Map;
+
+import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mwolff.command.interfaces.Command;
+import org.mwolff.command.interfaces.CommandContainer;
+import org.mwolff.command.interfaces.CommandTransition;
+import org.mwolff.command.interfaces.ProcessCommand;
+import org.mwolff.command.parameterobject.DefaultParameterObject;
+import org.mwolff.command.parameterobject.GenericParameterObject;
+import org.mwolff.command.process.DefaultEndCommand;
+import org.mwolff.command.samplecommands.*;
+import org.mwolff.command.testcommand.TestCommand;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -64,12 +77,13 @@ public class DefaultCommandContainerTest {
 
     @Test
     @DisplayName("addCommand works proper.")
-    void addCommand() {
+    void addCommand() throws NoSuchFieldException, IllegalAccessException {
         commandContainer.addCommand(new TestCommand("test", SUCCESS));
         GenericParameterObject context = DefaultParameterObject.getInstance();
         @SuppressWarnings("unchecked")
-        Map<Integer, Command<GenericParameterObject>> commandMap = (Map<Integer, Command<GenericParameterObject>>) ReflectionTestUtils
-                .getField(commandContainer, "commandList");
+        Field commandListField = DefaultCommandContainer.class.getDeclaredField("commandList");
+        commandListField.setAccessible(true);
+        Map<Integer, Command<GenericParameterObject>> commandMap = (Map<Integer, Command<GenericParameterObject>>) commandListField.get(commandContainer);
         assertThat(commandMap.size(), is(1));
         TestCommand command = (TestCommand) commandMap.values().iterator().next();
         assertThat(command, notNullValue());
@@ -82,12 +96,13 @@ public class DefaultCommandContainerTest {
 
     @Test
     @DisplayName("addCommand with priority works proper.")
-    void addCommandWithPriority() {
+    void addCommandWithPriority() throws NoSuchFieldException, IllegalAccessException {
         commandContainer.addCommand(20, new TestCommand("test", SUCCESS));
         GenericParameterObject context = DefaultParameterObject.getInstance();
         @SuppressWarnings("unchecked")
-        Map<Integer, TestCommand> commandMap = (Map<Integer, TestCommand>) ReflectionTestUtils
-                .getField(commandContainer, "commandList");
+        Field commandListField = DefaultCommandContainer.class.getDeclaredField("commandList");
+        commandListField.setAccessible(true);
+        Map<Integer, TestCommand> commandMap = (Map<Integer, TestCommand>) commandListField.get(commandContainer);
         assertThat(commandMap.size(), is(1));
         Integer res = commandMap.keySet().iterator().next();
         assertThat(res, is(20));

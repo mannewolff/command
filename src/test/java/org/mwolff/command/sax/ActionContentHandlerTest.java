@@ -35,9 +35,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mwolff.command.extensions.MockitoExtension;
 import org.mwolff.command.interfaces.Transition;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.xml.sax.Attributes;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -59,7 +59,9 @@ public class ActionContentHandlerTest {
         Mockito.when(atts.getValue("to")).thenReturn("Next");
         Mockito.when(atts.getValue("name")).thenReturn("OK");
         actionContentHandler.startElement("", "action", "", atts);
-        final Action action = (Action) ReflectionTestUtils.getField(actionContentHandler, "action");
+        Field actionField = ActionContentHandler.class.getDeclaredField("action");
+        actionField.setAccessible(true);
+        final Action action = (Action) actionField.get(actionContentHandler);
         assertNotNull(action);
         assertThat(action.getClassname(),
                 CoreMatchers.is("org.mwolff.command.samplecommands.ProcessTestCommandStart"));
@@ -70,9 +72,11 @@ public class ActionContentHandlerTest {
         final ActionContentHandler actionContentHandler = new ActionContentHandler();
         Mockito.when(atts.getValue("to")).thenReturn("Next");
         Mockito.when(atts.getValue("name")).thenReturn("OK");
-        ReflectionTestUtils.setField(actionContentHandler, "action", new Action());
+        Field actionField = ActionContentHandler.class.getDeclaredField("action");
+        actionField.setAccessible(true);
+        actionField.set(actionContentHandler, new Action());
         actionContentHandler.startElement("", "transition", "", atts);
-        final Action action = (Action) ReflectionTestUtils.getField(actionContentHandler, "action");
+        final Action action = (Action) actionField.get(actionContentHandler);
         assertNotNull(action);
         final Transition transition = action.getTransitions().get(0);
         assertThat(transition.getTarget(), CoreMatchers.is("Next"));
@@ -82,7 +86,9 @@ public class ActionContentHandlerTest {
     @Test
     public void testEndElement() throws Exception {
         final ActionContentHandler actionContentHandler = new ActionContentHandler();
-        ReflectionTestUtils.setField(actionContentHandler, "action", new Action());
+        Field actionField = ActionContentHandler.class.getDeclaredField("action");
+        actionField.setAccessible(true);
+        actionField.set(actionContentHandler, new Action());
         actionContentHandler.endElement("", "action", "");
         final List<Action> actions = actionContentHandler.getActions();
         assertThat(actions.size(), CoreMatchers.is(1));

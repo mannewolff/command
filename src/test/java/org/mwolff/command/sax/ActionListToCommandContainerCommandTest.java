@@ -33,8 +33,8 @@ import org.junit.jupiter.api.Test;
 import org.mwolff.command.AbstractDefaultCommand;
 import org.mwolff.command.interfaces.*;
 import org.mwolff.command.parameterobject.GenericParameterObject;
-import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -92,8 +92,9 @@ public class ActionListToCommandContainerCommandTest {
                 .get(COMMAND_CONTAINER);
         assertThat(container, CoreMatchers.notNullValue());
         assertThat(result, CoreMatchers.is(SUCCESS));
-        final Map<Integer, Command<GenericParameterObject>> commandList = (Map<Integer, Command<GenericParameterObject>>) ReflectionTestUtils
-                .getField(container, "commandList");
+        Field commandListField = container.getClass().getDeclaredField("commandList");
+        commandListField.setAccessible(true);
+        final Map<Integer, Command<GenericParameterObject>> commandList = (Map<Integer, Command<GenericParameterObject>>) commandListField.get(container);
         assertThat(commandList, CoreMatchers.notNullValue());
         assertThat(commandList.size(), CoreMatchers.is(1));
         final ProcessCommand<GenericParameterObject> command = (ProcessCommand<GenericParameterObject>) commandList
