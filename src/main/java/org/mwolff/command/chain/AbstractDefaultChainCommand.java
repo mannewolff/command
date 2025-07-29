@@ -5,9 +5,9 @@
  * @author Manfred Wolff <m.wolff@neusta.de>
  * 
  *         Download:
- *         https://mwolff.info:7990/bitbucket/scm/scf/simplecommandframework.git
+ *         https://github.com/simplecommand/command.git
  * 
- *         Copyright (C) 2018 Manfred Wolff and the simple command community
+ *         Copyright (C) 2018-2021 Manfred Wolff and the simple command community
  * 
  *         This library is free software; you can redistribute it and/or
  *         modify it under the terms of the GNU Lesser General Public
@@ -28,7 +28,8 @@
 package org.mwolff.command.chain;
 
 import org.mwolff.command.AbstractDefaultCommand;
-import org.mwolff.command.CommandTransition;
+import org.mwolff.command.interfaces.ChainCommand;
+import org.mwolff.command.interfaces.CommandTransition;
 
 /** Default implementation for a chain-command. You may use
  * <code>executeAsChain</code> for all executions of the <code>command</code> or
@@ -36,7 +37,7 @@ import org.mwolff.command.CommandTransition;
 public abstract class AbstractDefaultChainCommand<T extends Object> extends AbstractDefaultCommand<T>
         implements ChainCommand<T> {
 
-    /** @see org.mwolff.command.chain.ChainCommand#executeCommandAsChain(java.lang.Object) */
+    /** @see ChainCommand#executeCommandAsChain(java.lang.Object) */
     @Override
     public CommandTransition executeCommandAsChain(T parameterObject) {
         final CommandTransition result = executeCommand(parameterObject);

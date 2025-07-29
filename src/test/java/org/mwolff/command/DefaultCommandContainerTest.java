@@ -1,24 +1,24 @@
 /** Simple Command Framework.
- * 
+ *
  * Framework for easy building software that fits the SOLID principles.
- * 
+ *
  * @author Manfred Wolff <m.wolff@neusta.de>
- * 
+ *
  *         Download:
- *         https://mwolff.info:7990/bitbucket/scm/scf/simplecommandframework.git
- * 
- *         Copyright (C) 2018 Manfred Wolff and the simple command community
- * 
+ *         https://github.com/simplecommand/command.git
+ *
+ *         Copyright (C) 2018-2021 Manfred Wolff and the simple command community
+ *
  *         This library is free software; you can redistribute it and/or
  *         modify it under the terms of the GNU Lesser General Public
  *         License as published by the Free Software Foundation; either
  *         version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *         This library is distributed in the hope that it will be useful,
  *         but WITHOUT ANY WARRANTY; without even the implied warranty of
  *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  *         Lesser General Public License for more details.
- * 
+ *
  *         You should have received a copy of the GNU Lesser General Public
  *         License along with this library; if not, write to the Free Software
  *         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
@@ -27,29 +27,29 @@
 
 package org.mwolff.command;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mwolff.command.CommandTransition.*;
-
-import java.util.Map;
-
 import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mwolff.command.interfaces.Command;
+import org.mwolff.command.interfaces.CommandContainer;
+import org.mwolff.command.interfaces.CommandTransition;
+import org.mwolff.command.interfaces.ProcessCommand;
 import org.mwolff.command.parameterobject.DefaultParameterObject;
 import org.mwolff.command.parameterobject.GenericParameterObject;
 import org.mwolff.command.process.DefaultEndCommand;
-import org.mwolff.command.process.ProcessCommand;
-import org.mwolff.command.samplecommands.ExceptionCommand;
-import org.mwolff.command.samplecommands.FailureTestCommand;
-import org.mwolff.command.samplecommands.ProcessTestCommandNext;
-import org.mwolff.command.samplecommands.ProcessTestCommandStart;
-import org.mwolff.command.samplecommands.SimpleTestCommand;
+import org.mwolff.command.samplecommands.*;
 import org.mwolff.command.testcommand.TestCommand;
 import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.Map;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mwolff.command.interfaces.CommandTransition.NEXT;
+import static org.mwolff.command.interfaces.CommandTransition.SUCCESS;
 
 public class DefaultCommandContainerTest {
 
@@ -126,12 +126,12 @@ public class DefaultCommandContainerTest {
      * inserted Command wins ... etc.
      */
     @Test
-    public void testAddCommandWithPriorityInCommandContainerAndExecute() throws Exception {
+    public void testAddCommandWithPriorityInCommandContainerAndExecute() {
         final CommandContainer<GenericParameterObject> commandContainer = createCommandInOrderWithPrioritySUCCESSes();
         context.put("resultString", "");
         commandContainer.executeCommand(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     @Test
@@ -140,7 +140,7 @@ public class DefaultCommandContainerTest {
         context.put("priority", "");
         commandContainer.executeCommand(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     @Test
@@ -149,8 +149,8 @@ public class DefaultCommandContainerTest {
         context.put("priority", "");
         final CommandTransition transition = commandContainer.executeCommandAsChain(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
-        Assert.assertEquals(transition, CommandTransition.SUCCESS);
+        assertEquals("1-2-3-", priorString);
+        assertEquals(transition, CommandTransition.SUCCESS);
 
     }
 
@@ -161,8 +161,8 @@ public class DefaultCommandContainerTest {
 
         final CommandTransition transition = commandContainer.executeCommandAsChain(context);
         final String priorString = context.getAsString("priority");
-        Assert.assertEquals(priorString, "");
-        Assert.assertEquals(transition, CommandTransition.FAILURE);
+        assertEquals(priorString, "");
+        assertEquals(transition, CommandTransition.FAILURE);
 
     }
 
@@ -172,7 +172,7 @@ public class DefaultCommandContainerTest {
         context.put("priority", "");
         commandContainer.executeCommand(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     /*
@@ -185,7 +185,7 @@ public class DefaultCommandContainerTest {
         context.put("priority", "");
         commandContainer.executeCommandAsChain(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     /*
@@ -200,7 +200,7 @@ public class DefaultCommandContainerTest {
 
         commandContainer.executeCommand(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     /*
@@ -215,7 +215,7 @@ public class DefaultCommandContainerTest {
 
         commandContainer.executeCommandAsChain(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-3-", priorString);
+        assertEquals("1-2-3-", priorString);
     }
 
     @Test
@@ -224,7 +224,7 @@ public class DefaultCommandContainerTest {
         commandContainer.addCommand(2, new SimpleTestCommand<>());
         final CommandTransition transition = commandContainer.executeCommand(context);
         context.getAsString("priority");
-        Assert.assertEquals(CommandTransition.FAILURE, transition);
+        assertEquals(CommandTransition.FAILURE, transition);
 
     }
 
@@ -234,14 +234,14 @@ public class DefaultCommandContainerTest {
         search.setProcessID("END");
         commandContainer.addCommand(search);
         final String result = commandContainer.executeAsProcess(context);
-        Assert.assertEquals(null, result);
+        assertEquals(null, result);
     }
 
     // Remark: Should work if no command is inserted
     @Test
     public void testExecuteWithNullCommands() throws Exception {
         final String result = commandContainer.executeAsProcess(null, context);
-        Assert.assertEquals(null, result);
+        assertEquals(null, result);
 
     }
 
@@ -252,7 +252,7 @@ public class DefaultCommandContainerTest {
         commandContainer.addCommand(2, new ProcessTestCommandNext<>("NextCommand"));
 
         final Command<GenericParameterObject> found = commandContainer.getCommandByProcessID("StartCommand");
-        Assert.assertSame(found, search);
+        assertSame(found, search);
     }
 
     /*
@@ -270,17 +270,17 @@ public class DefaultCommandContainerTest {
 
         mixedList.executeCommand(context);
         String priorString = context.getAsString("resultString");
-        Assert.assertEquals("S-1-2-3-", priorString);
+        assertEquals("S-1-2-3-", priorString);
         mixedList.executeCommandAsChain(context);
         priorString = context.getAsString("resultString");
-        Assert.assertEquals("S-1-2-3-S-1-2-3-", priorString);
+        assertEquals("S-1-2-3-S-1-2-3-", priorString);
     }
 
     @Test
     public void testsetProcessID() throws Exception {
-        final Throwable exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        final Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
             commandContainer.setProcessID("something");
         });
-        Assert.assertThat(exception.getMessage(), CoreMatchers.is("ProcessID cannot be set on Container."));
+        assertThat(exception.getMessage(), CoreMatchers.is("ProcessID cannot be set on Container."));
     }
 }

@@ -1,10 +1,13 @@
-/* Simple Command Framework.
+/** Simple Command Framework.
  *
- *          Framework for easy building software that fits the SOLID principles.
+ * Framework for easy building software that fits the SOLID principles.
  *
- *         @author Manfred Wolff <m.wolff@neusta.de>
+ * @author Manfred Wolff <m.wolff@neusta.de>
  *
- *         Copyright (C) 2018 - 2020 Manfred Wolff and the simple command community
+ *         Download:
+ *         https://github.com/simplecommand/command.git
+ *
+ *         Copyright (C) 2018-2021 Manfred Wolff and the simple command community
  *
  *         This library is free software; you can redistribute it and/or
  *         modify it under the terms of the GNU Lesser General Public
@@ -19,22 +22,18 @@
  *         You should have received a copy of the GNU Lesser General Public
  *         License along with this library; if not, write to the Free Software
  *         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- *         02110-1301 USA
- */
+ *         02110-1301
+ *         USA */
 
 package org.mwolff.command;
 
-import static org.mwolff.command.CommandTransition.DONE;
-import static org.mwolff.command.CommandTransition.FAILURE;
-import static org.mwolff.command.CommandTransition.NEXT;
-import static org.mwolff.command.CommandTransition.SUCCESS;
+import org.mwolff.command.interfaces.*;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
-import org.mwolff.command.chain.ChainCommand;
-import org.mwolff.command.process.ProcessCommand;
+import static org.mwolff.command.interfaces.CommandTransition.*;
 
 /**
  * CommandContainer that holds Command-objects. Should have the same behavior
@@ -55,18 +54,17 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
             });
 
     /**
-     * @see org.mwolff.command.CommandContainer#addCommand(org.mwolff.command.Command)
-     */
-    @Override
+     * @inheritDoc
+     **/
+     @Override
     public CommandContainer<T> addCommand(final Command<T> command) {
         commandList.put(0, command);
         return this;
     }
 
     /**
-     * @see org.mwolff.command.CommandContainer#addCommand(int,
-     * org.mwolff.command.Command)
-     */
+     * @inheritDoc
+     **/
     @Override
     public CommandContainer<T> addCommand(final int priority, final Command<T> command) {
         commandList.put(priority, command);
@@ -75,19 +73,11 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
 
     @Override
     public CommandTransition executeCommandAsChain(T parameterObject) {
-
-        CommandTransition result = NEXT;
-        for (final Command<T> command : commandList.values()) {
-            result = ((ChainCommand<T>) command).executeCommandAsChain(parameterObject);
-            if ((result == DONE) || (result == FAILURE)) {
-                break;
-            }
-        }
-        return result;
+        return executeCommandsInLoop(parameterObject, true);
     }
 
     /**
-     * @see org.mwolff.command.process.ProcessCommand#executeAsProcess(java.lang.String,
+     * @see ProcessCommand#executeAsProcess(java.lang.String,
      * java.lang.Object)
      */
     @Override
@@ -133,16 +123,21 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
 
     @Override
     public CommandTransition executeCommand(T parameterObject) {
+        return executeCommandsInLoop(parameterObject, false);
+    }
 
+    private CommandTransition executeCommandsInLoop(T parameterObject, boolean isChainCommand) {
         CommandTransition transition = SUCCESS;
-
         for (final Command<T> command : commandList.values()) {
-            transition = command.executeCommand(parameterObject);
-            if (transition.equals(FAILURE)) {
+            if (isChainCommand) {
+                transition = ((ChainCommand<T>) command).executeCommandAsChain(parameterObject);
+            } else {
+                transition = command.executeCommand(parameterObject);
+            }
+            if (transition.equals(FAILURE) || (isChainCommand && transition.equals(DONE))) {
                 break;
             }
         }
-
         return transition;
     }
 }

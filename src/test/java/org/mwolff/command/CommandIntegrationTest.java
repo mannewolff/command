@@ -1,24 +1,24 @@
 /** Simple Command Framework.
- * 
+ *
  * Framework for easy building software that fits the SOLID principles.
- * 
+ *
  * @author Manfred Wolff <m.wolff@neusta.de>
- * 
+ *
  *         Download:
- *         https://mwolff.info:7990/bitbucket/scm/scf/simplecommandframework.git
- * 
- *         Copyright (C) 2018 Manfred Wolff and the simple command community
- * 
+ *         https://github.com/simplecommand/command.git
+ *
+ *         Copyright (C) 2018-2021 Manfred Wolff and the simple command community
+ *
  *         This library is free software; you can redistribute it and/or
  *         modify it under the terms of the GNU Lesser General Public
  *         License as published by the Free Software Foundation; either
  *         version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *         This library is distributed in the hope that it will be useful,
  *         but WITHOUT ANY WARRANTY; without even the implied warranty of
  *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  *         Lesser General Public License for more details.
- * 
+ *
  *         You should have received a copy of the GNU Lesser General Public
  *         License along with this library; if not, write to the Free Software
  *         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
@@ -27,18 +27,20 @@
 
 package org.mwolff.command;
 
-import static org.mwolff.command.CommandTransition.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.mwolff.command.chain.InjectionChainBuilder;
+import org.mwolff.command.builder.InjectionChainBuilder;
+import org.mwolff.command.interfaces.Command;
+import org.mwolff.command.interfaces.CommandContainer;
 import org.mwolff.command.parameterobject.DefaultParameterObject;
 import org.mwolff.command.parameterobject.GenericParameterObject;
 import org.mwolff.command.samplecommands.SimpleTestCommand;
 import org.mwolff.command.testcommand.TestCommand;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mwolff.command.interfaces.CommandTransition.NEXT;
 
 public class CommandIntegrationTest {
 
@@ -71,7 +73,7 @@ public class CommandIntegrationTest {
         context.put("resultString", "");
         builder.executeCommandAsChain(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("1-2-", priorString);
+        assertEquals("1-2-", priorString);
     }
 
     /*
@@ -93,7 +95,7 @@ public class CommandIntegrationTest {
 
         mixedList.executeCommandAsChain(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("S-1-2-3-", priorString);
+        assertEquals("S-1-2-3-", priorString);
     }
 
     /*
@@ -109,7 +111,7 @@ public class CommandIntegrationTest {
         container.addCommand(new TestCommand("1-", NEXT));
         container.addCommand(new TestCommand("2-", NEXT));
         container.executeCommand(context);
-        Assert.assertEquals("1-2-", context.getAsString("resultString"));
+        assertEquals("1-2-", context.getAsString("resultString"));
     }
 
     /*
@@ -125,7 +127,7 @@ public class CommandIntegrationTest {
         container.addCommand(2, new TestCommand("1-", NEXT));
         container.addCommand(1, new TestCommand("2-", NEXT));
         container.executeCommand(context);
-        Assert.assertEquals("2-1-3-", context.getAsString("resultString"));
+        assertEquals("2-1-3-", context.getAsString("resultString"));
     }
 
     /*
@@ -146,7 +148,7 @@ public class CommandIntegrationTest {
 
         mixedList.executeCommand(context);
         final String priorString = context.getAsString("resultString");
-        Assert.assertEquals("S-1-2-3-", priorString);
+        assertEquals("S-1-2-3-", priorString);
     }
 
     /*
@@ -159,6 +161,6 @@ public class CommandIntegrationTest {
         final CommandContainer<GenericParameterObject> container = new DefaultCommandContainer<>();
         container.addCommand(new TestCommand("1-", NEXT));
         container.addCommand(new TestCommand("2-", NEXT));
-        container.executeCommand(DefaultParameterObject.NULLCONTEXT);
+        container.executeCommand(new DefaultParameterObject());
     }
 }
