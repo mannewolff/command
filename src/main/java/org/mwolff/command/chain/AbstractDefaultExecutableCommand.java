@@ -2,7 +2,7 @@
  * 
  * Framework for easy building software that fits the SOLID principles.
  * 
- * @author Manfred Wolff <m.wolff@neusta.de>
+ * @author Manfred Wolff <info@mwolff.org>
  * 
  *         Download:
  *         https://github.com/simplecommand/command.git
@@ -28,22 +28,31 @@
 package org.mwolff.command.chain;
 
 import org.mwolff.command.AbstractDefaultCommand;
-import org.mwolff.command.interfaces.ExecutableCommand;
 import org.mwolff.command.interfaces.CommandTransition;
+import org.mwolff.command.interfaces.ExecutableCommand;
 
-/** Default implementation for a chain-command. You may use
- * <code>executeAsChain</code> for all executions of the <code>command</code> or
- * <code>commandContainer</code>. */
-public abstract class AbstractDefaultExecutableCommand<T extends Object> extends AbstractDefaultCommand<T>
+/**
+ * Provides a default implementation for a command that is part of a chain.
+ * <p>
+ * This abstract class simplifies the creation of executable commands within a
+ * chain of responsibility. It adapts the result of the standard
+ * {@link #executeCommand(Object)} method for chain-based execution.
+ *
+ * @param <T> The type of the parameter object.
+ */
+public abstract class AbstractDefaultExecutableCommand<T> extends AbstractDefaultCommand<T>
         implements ExecutableCommand<T> {
 
-    /** @see ExecutableCommand#executeCommandAsChain(java.lang.Object) */
+    /**
+     * Executes the command and determines the next step in the command chain.
+     * If the underlying {@link #executeCommand(Object)} returns {@code SUCCESS}, this method returns {@code NEXT} to continue the chain. Otherwise, it returns {@code DONE} to stop the chain's execution.
+     * @see ExecutableCommand#executeCommandAsChain(java.lang.Object)
+     */
     @Override
     public CommandTransition executeCommandAsChain(T parameterObject) {
-        final CommandTransition result = executeCommand(parameterObject);
-        if (result == CommandTransition.SUCCESS) {
-            return CommandTransition.NEXT;
-        }
-        return CommandTransition.DONE;
+        return executeCommand(parameterObject) == CommandTransition.SUCCESS
+                ? CommandTransition.NEXT
+                : CommandTransition.DONE;
     }
 }
+
