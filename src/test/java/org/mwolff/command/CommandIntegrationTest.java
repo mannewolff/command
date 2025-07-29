@@ -90,7 +90,7 @@ public class CommandIntegrationTest {
         commandContainer.addCommand(3, new TestCommand("3-", NEXT));
 
         final CommandContainer<GenericParameterObject> mixedList = new DefaultCommandContainer<>();
-        mixedList.addCommand(1, new SimpleTestCommand<>());
+        mixedList.addCommand(1, new SimpleTestCommand<GenericParameterObject>());
         mixedList.addCommand(2, commandContainer);
 
         mixedList.executeCommandAsChain(context);
@@ -143,7 +143,7 @@ public class CommandIntegrationTest {
         commandContainer.addCommand(3, new TestCommand("3-", NEXT));
 
         final CommandContainer<GenericParameterObject> mixedList = new DefaultCommandContainer<>();
-        mixedList.addCommand(new SimpleTestCommand<>());
+        mixedList.addCommand(new SimpleTestCommand<GenericParameterObject>());
         mixedList.addCommand(commandContainer);
 
         mixedList.executeCommand(context);

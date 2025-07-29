@@ -29,7 +29,7 @@ package org.mwolff.command;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
-import org.mwolff.command.interfaces.ChainCommand;
+import org.mwolff.command.interfaces.ExecutableCommand;
 import org.mwolff.command.interfaces.Command;
 import org.mwolff.command.interfaces.CommandTransition;
 import org.mwolff.command.parameterobject.DefaultParameterObject;
@@ -84,7 +84,7 @@ public class CommandTest {
 
    @Test
    public void testDefaultBehaviorWithException() throws Exception {
-      final ChainCommand<DefaultParameterObject> command = new ExceptionCommand<>();
+      final ExecutableCommand<DefaultParameterObject> command = new ExceptionCommand<>();
       final DefaultParameterObject context = new DefaultParameterObject();
       command.executeCommandAsChain(context);
       final String result = context.getAsString("executed");

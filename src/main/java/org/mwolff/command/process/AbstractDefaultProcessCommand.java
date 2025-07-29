@@ -27,7 +27,7 @@
 
 package org.mwolff.command.process;
 
-import org.mwolff.command.chain.AbstractDefaultChainCommand;
+import org.mwolff.command.chain.AbstractDefaultExecutableCommand;
 import org.mwolff.command.interfaces.ProcessCommand;
 import org.mwolff.command.interfaces.Transition;
 
@@ -37,7 +37,7 @@ import java.util.List;
 /** Default implementation for a process-command. You may use  <code>executeAsProcess</code> for all executions of the
  * <code>command</code> or  <code>commandContainer</code>.
  */
-public abstract class AbstractDefaultProcessCommand<T extends Object> extends AbstractDefaultChainCommand<T>
+public abstract class AbstractDefaultProcessCommand<T extends Object> extends AbstractDefaultExecutableCommand<T>
         implements ProcessCommand<T> {
 
     protected String           processID;

@@ -171,7 +171,7 @@ public class DefaultCommandContainerTest {
 
     @Test
     public void testExecuteCommandAsChainSuccessFAIL() throws Exception {
-        commandContainer.addCommand(new FailureTestCommand<>());
+        commandContainer.addCommand(new FailureTestCommand<GenericParameterObject>());
         context.put("priority", "");
 
         final CommandTransition transition = commandContainer.executeCommandAsChain(context);
@@ -235,8 +235,8 @@ public class DefaultCommandContainerTest {
 
     @Test
     public void testChainWithFailure() throws Exception {
-        commandContainer.addCommand(1, new ExceptionCommand<>());
-        commandContainer.addCommand(2, new SimpleTestCommand<>());
+        commandContainer.addCommand(1, new ExceptionCommand<GenericParameterObject>());
+        commandContainer.addCommand(2, new SimpleTestCommand<GenericParameterObject>());
         final CommandTransition transition = commandContainer.executeCommand(context);
         context.getAsString("priority");
         assertEquals(CommandTransition.FAILURE, transition);
@@ -280,7 +280,7 @@ public class DefaultCommandContainerTest {
         commandContainer.addCommand(3, new TestCommand("3-", SUCCESS));
 
         final CommandContainer<GenericParameterObject> mixedList = new DefaultCommandContainer<>();
-        mixedList.addCommand(new SimpleTestCommand<>());
+        mixedList.addCommand(new SimpleTestCommand<GenericParameterObject>());
         mixedList.addCommand(commandContainer);
 
         mixedList.executeCommand(context);

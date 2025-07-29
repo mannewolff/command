@@ -62,7 +62,7 @@ public class InjectionChainBuilderTest {
         final GenericParameterObject context = new DefaultParameterObject();
         final InjectionChainBuilder<GenericParameterObject> builder = new InjectionChainBuilder<>();
         final List<Command<GenericParameterObject>> commandList = new ArrayList<>();
-        final FailureTestCommand<GenericParameterObject> failureTestCommand = new FailureTestCommand<>();
+        final FailureTestCommand<GenericParameterObject> failureTestCommand = new FailureTestCommand<GenericParameterObject>();
         commandList.add(failureTestCommand);
         builder.setCommands(commandList);
         final CommandTransition result = builder.executeCommandAsChain(context);
@@ -74,7 +74,7 @@ public class InjectionChainBuilderTest {
         final GenericParameterObject context = new DefaultParameterObject();
         final InjectionChainBuilder<GenericParameterObject> builder = new InjectionChainBuilder<>();
         final List<Command<GenericParameterObject>> commandList = new ArrayList<>();
-        final DoneTestCommand<GenericParameterObject> failureTestCommand = new DoneTestCommand<>();
+        final DoneTestCommand<GenericParameterObject> failureTestCommand = new DoneTestCommand<GenericParameterObject>();
         commandList.add(failureTestCommand);
         builder.setCommands(commandList);
         final CommandTransition result = builder.executeCommandAsChain(context);
@@ -86,7 +86,7 @@ public class InjectionChainBuilderTest {
         final InjectionChainBuilder<GenericParameterObject> builder = new InjectionChainBuilder<>();
         final List<Command<GenericParameterObject>> commandList = new ArrayList<>();
         final GenericParameterObject context = new DefaultParameterObject();
-        final ProcessTestCommandStart<GenericParameterObject> processTestStartCommand = new ProcessTestCommandStart<>(
+        final ProcessTestCommandStart<GenericParameterObject> processTestStartCommand = new ProcessTestCommandStart<GenericParameterObject>(
                 "Start");
         Transition transition = new DefaultTransition();
         transition.setReturnValue("OK");
@@ -97,7 +97,7 @@ public class InjectionChainBuilderTest {
         transition.setTarget("Start");
         processTestStartCommand.addTransition(transition);
 
-        final ProcessTestCommandEnd<GenericParameterObject> processTestEndCommand = new ProcessTestCommandEnd<>("Next");
+        final ProcessTestCommandEnd<GenericParameterObject> processTestEndCommand = new ProcessTestCommandEnd<GenericParameterObject>("Next");
 
         commandList.add(processTestStartCommand);
         commandList.add(processTestEndCommand);
@@ -153,7 +153,7 @@ public class InjectionChainBuilderTest {
         final InjectionChainBuilder<GenericParameterObject> builder = new InjectionChainBuilder<>();
         final List<Command<GenericParameterObject>> commandList = new ArrayList<>();
         final GenericParameterObject context = new DefaultParameterObject();
-        final Command<GenericParameterObject> command = new ExceptionCommand<>();
+        final Command<GenericParameterObject> command = new ExceptionCommand<GenericParameterObject>();
         commandList.add(command);
         builder.setCommands(commandList);
         final CommandTransition result = builder.executeCommandAsChain(context);

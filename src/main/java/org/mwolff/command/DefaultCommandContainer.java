@@ -130,7 +130,7 @@ public class DefaultCommandContainer<T> implements CommandContainer<T> {
         CommandTransition transition = SUCCESS;
         for (final Command<T> command : commandList.values()) {
             if (isChainCommand) {
-                transition = ((ChainCommand<T>) command).executeCommandAsChain(parameterObject);
+                transition = ((ExecutableCommand<T>) command).executeCommandAsChain(parameterObject);
             } else {
                 transition = command.executeCommand(parameterObject);
             }

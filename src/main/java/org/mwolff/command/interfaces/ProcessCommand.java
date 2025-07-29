@@ -34,7 +34,7 @@ import java.util.List;
  * command contexts.
  *
  * @author Manfred Wolff */
-public interface ProcessCommand<T extends Object> extends ChainCommand<T> {
+public interface ProcessCommand<T extends Object> extends ExecutableCommand<T> {
 
     static final String END = "END";
 

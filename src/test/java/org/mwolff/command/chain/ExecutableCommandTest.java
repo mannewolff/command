@@ -29,7 +29,7 @@ package org.mwolff.command.chain;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
-import org.mwolff.command.interfaces.ChainCommand;
+import org.mwolff.command.interfaces.ExecutableCommand;
 import org.mwolff.command.interfaces.CommandTransition;
 import org.mwolff.command.parameterobject.DefaultParameterObject;
 import org.mwolff.command.parameterobject.GenericParameterObject;
@@ -38,13 +38,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mwolff.command.interfaces.CommandTransition.NEXT;
 import static org.mwolff.command.interfaces.CommandTransition.SUCCESS;
 
-public class ChainCommandTest {
+public class ExecutableCommandTest {
 
     @Test
     public void testInterfaceDefaultExecuteCommandAsChain() {
 
         final GenericParameterObject context = new DefaultParameterObject();
-        final ChainCommand<GenericParameterObject> command = new AbstractDefaultChainCommand<GenericParameterObject>() {
+        final ExecutableCommand<GenericParameterObject> command = new AbstractDefaultExecutableCommand<GenericParameterObject>() {
 
             @Override
             public CommandTransition executeCommand(final GenericParameterObject parameterObject) {
@@ -62,7 +62,7 @@ public class ChainCommandTest {
     @Test
     public void testInterfaceDefaultExecuteCommandAsChainFAILED() {
 
-        final ChainCommand<GenericParameterObject> command = new AbstractDefaultChainCommand<GenericParameterObject>() {
+        final ExecutableCommand<GenericParameterObject> command = new AbstractDefaultExecutableCommand<GenericParameterObject>() {
 
             @Override
             public CommandTransition executeCommand(final GenericParameterObject parameterObject) {

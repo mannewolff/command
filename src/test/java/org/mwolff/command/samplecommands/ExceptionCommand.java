@@ -27,12 +27,12 @@
 
 package org.mwolff.command.samplecommands;
 
-import org.mwolff.command.chain.AbstractDefaultChainCommand;
+import org.mwolff.command.chain.AbstractDefaultExecutableCommand;
 import org.mwolff.command.interfaces.Command;
 import org.mwolff.command.interfaces.CommandTransition;
 import org.mwolff.command.parameterobject.GenericParameterObject;
 
-public class ExceptionCommand<T extends GenericParameterObject> extends AbstractDefaultChainCommand<T>
+public class ExceptionCommand<T extends GenericParameterObject> extends AbstractDefaultExecutableCommand<T>
         implements Command<T> {
 
     @Override

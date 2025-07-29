@@ -43,7 +43,7 @@ public class SimpleTestCommandTest {
     @Test
     public void testExecuteCommand() {
         final GenericParameterObject context = new DefaultParameterObject();
-        final Command<GenericParameterObject> command = new SimpleTestCommand<>();
+        final Command<GenericParameterObject> command = new SimpleTestCommand<GenericParameterObject>();
         CommandTransition result = command.executeCommand(context);
         assertThat(context.getAsString("SimpleTestCommand"), is("SimpleTestCommand"));
         assertThat(context.getAsString("resultString"), is("S-"));
@@ -52,7 +52,7 @@ public class SimpleTestCommandTest {
     
     @Test
     public void testFailure() throws Exception {
-        final Command<GenericParameterObject> command = new SimpleTestCommand<>();
+        final Command<GenericParameterObject> command = new SimpleTestCommand<GenericParameterObject>();
         CommandTransition result = command.executeCommand(null);
         assertThat(result, is(FAILURE));
     }

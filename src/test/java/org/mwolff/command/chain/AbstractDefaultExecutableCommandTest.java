@@ -36,16 +36,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mwolff.command.interfaces.CommandTransition.FAILURE;
 import static org.mwolff.command.interfaces.CommandTransition.SUCCESS;
 
-public class AbstractDefaultChainCommandTest {
+public class AbstractDefaultExecutableCommandTest {
 
-    final class TestClassSuccess extends AbstractDefaultChainCommand<String> {
+    final class TestClassSuccess extends AbstractDefaultExecutableCommand<String> {
         @Override
         public CommandTransition executeCommand(String parameterObject) {
             return SUCCESS;
         }
     }
 
-    final class TestClassFailure extends AbstractDefaultChainCommand<String> {
+    final class TestClassFailure extends AbstractDefaultExecutableCommand<String> {
         @Override
         public CommandTransition executeCommand(String parameterObject) {
             return FAILURE;

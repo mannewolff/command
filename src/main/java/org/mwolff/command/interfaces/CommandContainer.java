@@ -33,7 +33,7 @@ package org.mwolff.command.interfaces;
  * container to build chains.
  *
  * @author Manfred Wolff */
-public interface CommandContainer<T extends Object> extends ChainCommand<T>, ProcessCommand<T> {
+public interface CommandContainer<T extends Object> extends ExecutableCommand<T>, ProcessCommand<T> {
 
     /** Adds a <code>Command</code> to the list. Because a
      * <code>CommandContainer</code> is a <code>Command</code> you can add

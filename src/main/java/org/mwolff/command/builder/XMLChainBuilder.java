@@ -43,7 +43,7 @@ import static org.mwolff.command.sax.GlobalCommandConstants.*;
 /** Chain builder parsing an XML file for building chains or process chains.
  *
  * @author Manfred Wolff */
-public class XMLChainBuilder<T extends Object> implements Command<T>, ProcessCommand<T>, ChainCommand<T> {
+public class XMLChainBuilder<T extends Object> implements ProcessCommand<T>, ExecutableCommand<T> {
 
     private final String xmlFilename;
 

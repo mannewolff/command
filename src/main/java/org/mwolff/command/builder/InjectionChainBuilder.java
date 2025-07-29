@@ -33,7 +33,7 @@ import org.mwolff.command.interfaces.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InjectionChainBuilder<T extends Object> implements Command<T>, ProcessCommand<T>, ChainCommand<T> {
+public class InjectionChainBuilder<T extends Object> implements ProcessCommand<T>, ExecutableCommand<T> {
 
     private List<Command<T>> commands = new ArrayList<>();
 
